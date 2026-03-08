@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package satellite.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/TylerWerne40/sat-track/pb";
+
+// First: base types everyone depends on
+message ParsedTLE {
+  int32 satellite_num     = 1;
+  string classification   = 2;
+  int32 epoch_year        = 3;
+  double epoch_days       = 4;
+  double bstar            = 5;
+  double inclination      = 6;
+  double right_ascension  = 7;
+  double eccentricity     = 8;
+  double arg_perigee      = 9;
+  double mean_anomaly     = 10;
+  double mean_motion      = 11;
+}
+
+message TLEPackage {
+  string name     = 1;
+  string line1    = 2;
+  string line2    = 3;
+  ParsedTLE parsed = 4;
+}
+
+// Then: refresh (simple, no deps)
+message RefreshCheck {
+  string satellite_id   = 1;
+  google.protobuf.Timestamp check_time = 2;
+}
+
+// Then: change (depends on TLEPackage)
+message TLEChange {
+  string satellite_id = 1;
+  TLEPackage new_tle    = 2;
+  google.protobuf.Timestamp change_time = 3;
+}
+
+// Finally: future extension (depends on TLEPackage)
+message ExtendedTLE {
+  TLEPackage classic_tle       = 1;
+  string     line3_raw         = 2;
+  double     ballistic_coeff   = 3;
+  double     mean_motion_ddot  = 4;
+  int64      catalog_id_extended = 5;
+  // repeated ... = 6; if needed later
+}

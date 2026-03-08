@@ -10,7 +10,7 @@ import (
 
 func ParseLine(t *routing.TLE, line string) (*routing.TLE, error) {
 	if len(line) < 69 {
-		return nil, errors.New("invalid TLE line 1 length")
+		return nil, errors.New("invalid TLE line length")
 	}
 
   err := fixedwidth.Unmarshal([]byte(line), t)

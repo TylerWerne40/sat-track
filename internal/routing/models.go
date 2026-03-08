@@ -1,6 +1,8 @@
 package routing
 
-
+import (
+  "github.com/TylerWerne40/sat-track/api/satellitepb"
+)
 
 
 type TLE_Package struct {
@@ -27,4 +29,25 @@ type TLE struct {
 	ArgPerigee     float64 `fixed:"35,42"`
 	MeanAnomaly    float64 `fixed:"44,51"`
 	MeanMotion     float64 `fixed:"53,63"` 
+}
+
+func tlePackageToProto(p TLE_Package) *satellitepb.TLEPackage {
+    return &satellitepb.TLEPackage{
+        Name:   p.Name,
+        Line1:  p.Line1,
+        Line2:  p.Line2,
+        Parsed: &satellitepb.ParsedTLE{
+            SatelliteNum:    int32(p.TwoLines.SatelliteNum),
+            Classification:  p.TwoLines.Classification,
+            EpochYear:       int32(p.TwoLines.EpochYear),
+            EpochDays:       p.TwoLines.EpochDays,
+            Bstar:           p.TwoLines.BStar,
+            Inclination:     p.TwoLines.Inclination,
+            RightAscension:  p.TwoLines.RightAscension,
+            Eccentricity:    p.TwoLines.Eccentricity,
+            ArgPerigee:      p.TwoLines.ArgPerigee,
+            MeanAnomaly:     p.TwoLines.MeanAnomaly,
+            MeanMotion:      p.TwoLines.MeanMotion,
+        },
+    }
 }
