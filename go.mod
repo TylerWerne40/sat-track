@@ -5,4 +5,5 @@ go 1.25.1
 require (
 	github.com/ianlopshire/go-fixedwidth v0.10.0
 	github.com/rabbitmq/amqp091-go v1.10.0
+	google.golang.org/protobuf v1.36.11
 )
