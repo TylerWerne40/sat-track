@@ -15,7 +15,7 @@ type TLE_Package struct {
 type TLE struct {
     
     // Parsed Fields
-  SatelliteNum   int     `fixed:"3,7"`
+	SatelliteNum   int     `fixed:"3,7"`
 	Classification string  `fixed:"8,8"`
 	EpochYear      int     `fixed:"19,20"`
 	EpochDays      float64 `fixed:"21,32"`
